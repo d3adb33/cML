@@ -17,12 +17,24 @@ double squared_error(double y, double y_pred) {
     return (y_pred - y) * (y_pred - y);
 };
 
-//function MSE aka Mean squared error
-double mse() {
-    //todo: implement double mse(struct model m, struct datapoint data[], int n) with a loop and use the functions predict and squared_error
-    return ;
+double mse(struct model m, struct datapoint data[], int n) {
+
+    double ms_error = 0.0;
+    double y_pred = 0.0;
+    double error = 0.0;
+
+    for (int i = 0; i < n; i++) {
+        y_pred = predict(data[i].x, m);
+        error = squared_error(data[i].y, y_pred);
+        ms_error = ms_error + error;
+    }
+    double mse_output = ms_error / n;
+    return mse_output;
 }
 
+struct model_train_step(struct model m, struct datapoint data[], int n, double learning_rate) {
+        
+}
 
 int main() {    
 
@@ -46,5 +58,9 @@ int main() {
         printf("y: %.2f, \n", train_data[i].y);
         printf("Prediction: %.2f, \n", pred);
     }
+
+    double mean_squared_error = mse(model, train_data, 5);
+    printf("MSE: %.2f", mean_squared_error);
+
     return 0;
 }
